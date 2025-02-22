@@ -22,7 +22,7 @@ The task says "before saving the data, the table must be cleared"
 - DB logs writing is implemented with a middleware
 
 ## DB table structures:
-
+ Data entries tables:
  ```
  CREATE TABLE [dbo].[DataEntries](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -42,7 +42,7 @@ The task says "before saving the data, the table must be cleared"
 	[OrderId] ASC
  )
  ```
- Таблица логов:
+ Logs table:
  ```
  CREATE TABLE [log].[Api2](
 	[Id] [bigint] IDENTITY(1,1) NOT NULL,
