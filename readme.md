@@ -1,26 +1,28 @@
-# Описание
-Пример выполнения задачи 1 из тестового задания.
-В задаче ничего не сказано про возможность/невозможность использования ORM:
-	- я применил EF Core, подход CodeFirst и миграции
+# Description 
 
-В задаче не уточнено нужно ли логгировать информацию о запросах и ответах в БД с данными или отдельную:
-	- сделал компромиссный вариант: использовал одну БД с разными контекстами. При необходимости логи можно вынести в отдельную БД за 10 минут
+Example of completing task 1 from the test task.
 
-В задаче сказано "перед сохранением данных таблицу необходимо очистить"
-	- сделал через TRUNCATE, а не через удаление всех строк
+The task does not say anything about the possibility/impossibility of using ORM:
+- I used EF Core, CodeFirst approach and migrations
 
-По структуре решения:
-	- Для понимания решения нужно смотреть с проекта Zvonarev.FinBeat.Test.BusinessLogic, где в UseCases расположены реализации фичей с разделением из задания/бизнес требований
-	- В решении использован CQRS и Mediator. Логика выполнения команд/запросов всегда лежит рядом с объектами самих команд/запросов и в названии добавлено слово "Handler"
-	- Выбор такой структуры решения обусловлен стремлением к "чистой" реализации, для максимального упрощения решения (просто != легко) с точки зрения отражения заданных требований и возможности изхменения бизнес логики
-	- Предоставлен минимальный набор тестов. Тесты обработчиков команд с использованием замоканных зависимостей (например БД) не представлены из-за необходимости сэкономить время
-	- К WebAPI подключена Swagger документация. Для метода записи данных использован пример JSON из задания
+The task does not specify whether it is necessary to log information about requests and responses in the DB with data or a separate one:
+- I made a compromise option: I used one DB with different contexts. If necessary, the logs can be moved to a separate DB in 10 minutes
 
-- Очистка таблицы и запись данных осуществляется в рамках транзакции, которая коммитится при завершении вызова. Реализовано через отдельный middleware
-- Логгирование в БД реализовано через отдельный middleware
+The task says "before saving the data, the table must be cleared"
+- I did it through TRUNCATE, and not by deleting all rows
 
-Структуры таблиц БД:
- Таблица данных:
+## About the structure of the solution:
+- To understand the solution, you need to look at the Zvonarev.FinBeat.Test.BusinessLogic project, where UseCases contains implementations of features with separation from the task/business requirements
+- The solution uses CQRS and Mediator. The logic of executing commands/queries is always located next to the objects of the commands/queries themselves and the word "Handler" is added to the name
+- The choice of such a solution structure is due to the desire for a "clean" implementation, to simplify the solution as much as possible (simple != easy) in terms of reflecting the specified requirements and the ability to change the business logic
+- A minimal set of tests is provided. Tests of command handlers using mocked dependencies (for example, a database) are not provided due to the need to save time
+- Swagger documentation is connected to WebAPI. The JSON example from the task is used for the data recording method
+
+- Table cleaning and data recording is carried out within a transaction that is committed when the call is completed. Implemented through a separate middleware
+- Logging in the database is implemented through a separate middleware
+
+## DB table structures:
+
  ```
  CREATE TABLE [dbo].[DataEntries](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -57,43 +59,3 @@
  CONSTRAINT [PK_Api2] PRIMARY KEY CLUSTERED ([Id] ASC)
  )
  ```
-
-Задача 2
- Запрос 1:
-```
-select 
-	cl.ClientName,
-	count(cl.Id)
-from test.ClientContacts cc
-join test.Clients cl on cc.ClientId = cl.Id
-group by cl.Id, cl.ClientName
-```
-
-Запрос 2:
-```
-select * from test.Clients where Id in (
-	select 
-		cl.Id
-	from test.ClientContacts cc
-	join test.Clients cl on cc.ClientId = cl.Id
-	group by cl.Id
-	having count(cl.Id) > 2
-)
-```
-
-Задача 3
-Не в зачет т.к. мне помог чат GPT, благодаря чему я открыл для себя LEAD OVER
-```
-select 
-Id,
-Sd,
-Nd Ed
-from (
-	select 
-	Id,
-	Dt Sd,
-	LEAD(Dt) Over (Partition by Id order by Dt) Nd
-	from test.ClientDates
-) x
-where Nd is not null
-```
