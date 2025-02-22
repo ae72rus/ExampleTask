@@ -19,7 +19,7 @@ The task says "before saving the data, the table must be cleared"
 - Swagger documentation is connected to WebAPI. The JSON example from the task is used for the data recording method
 
 - Table cleaning and data recording is carried out within a transaction that is committed when the call is completed. Implemented through a separate middleware
-- Logging in the database is implemented through a separate middleware
+- DB logs writing is implemented with a middleware
 
 ## DB table structures:
 
