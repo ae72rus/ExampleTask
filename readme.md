@@ -1,4 +1,60 @@
-# Description 
+# Task: Implementation of Web Service in ASP.NET Core
+
+### Overview
+**Objective:** Develop a web service in ASP.NET Core with logging of method requests and responses to the database.
+
+### Server-Side Development
+
+#### REST API Methods
+
+**Method 1: Data Saving**
+
+* **Purpose:** Save data to the database
+* **Input Format:** JSON array
+```json
+[
+    {"1": "value1"},
+    {"5": "value2"},
+    {"10": "value32"}
+]
+```
+
+* **Data Conversion:**
+  * `code` - integer type
+  * `value` - string type
+
+* **Database Requirements:**
+  * Table must be cleared before saving new data
+  * Table structure:
+    * Sequence number (primary key)
+    * Code (integer)
+    * Value (string)
+
+**Method 2: Data Retrieval**
+
+* **Purpose:** Retrieve data from the database
+* **Returned Data:**
+  * Sequence number
+  * Code
+  * Value
+
+* **Additional Feature:**
+  * Implement data filtering capability
+
+### Logging Requirements
+* Implement logging of:
+  * Method requests
+  * Method responses
+  * All information should be stored in the database
+
+### Technical Notes
+* Use REST technology for API development
+* Ensure proper error handling
+* Implement data validation for incoming requests
+* Consider performance optimization for data processing and storage operations
+
+# Implementation
+## Description 
 
 Example of completing task 1 from the test task.
 
